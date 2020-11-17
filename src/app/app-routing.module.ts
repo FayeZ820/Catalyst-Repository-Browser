@@ -1,10 +1,39 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {
+  RouterModule,
+  Routes,
+  PreloadAllModules,
+  NoPreloading,
+} from '@angular/router';
 
-const routes: Routes = [];
+import { PreloadModulesStrategy } from './core/strategies/preload-modules.strategy';
+
+const app_routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: '/repositories' },
+  // {
+  //   path: 'repositories/:name',
+  //   data: { preload: true },
+  //   loadChildren: () =>
+  //     import('./repository/repository.module').then((m) => m.RepositoryModule),
+  // },
+  {
+    path: 'repositories',
+    loadChildren: () =>
+      import('./repositories/repositories.module').then(
+        (m) => m.RepositoriesModule
+      ),
+  },
+  { path: '**', pathMatch: 'full', redirectTo: '/repositories' },
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(app_routes, {
+      preloadingStrategy: PreloadModulesStrategy,
+      relativeLinkResolution: 'legacy',
+    }),
+  ],
+  exports: [RouterModule],
+  providers: [PreloadModulesStrategy],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

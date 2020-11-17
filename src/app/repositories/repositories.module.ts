@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RepositoriesRoutingModule } from './repositories-routing.module';
 import { RepositoriesComponent } from './repositories.component';
 import { RepositoriesGridComponent } from './repositories-grid/repositories-grid.component';
 
@@ -8,7 +9,8 @@ import { RepositoriesGridComponent } from './repositories-grid/repositories-grid
 @NgModule({
   declarations: [RepositoriesComponent, RepositoriesGridComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    RepositoriesRoutingModule
   ]
 })
 export class RepositoriesModule { }

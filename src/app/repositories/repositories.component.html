@@ -1,17 +1,17 @@
 <div class="orga">
     <div class="navbar">
       <img src="../assets/images/icon-location.png" alt="" class="location" />
-      <span>{{ organisation?.location }}</span>
+      <span>{{ organisation.location }}</span>
     </div>
     <div class="content">
       <h1>{{ organisation?.name }}</h1>
       <p>
-        {{ organisation?.description }}
+        {{ organisation.description }}
       </p>
       <button type="button" (click)="navToRepoGrid()">
         Welcome to explore our
-        {{ organisation?.public_repos }} Github repositories under
-        {{ organisation?.name }}
+        {{ organisation.public_repos }} Github repositories under
+        {{ organisation.name }}
       </button>
     </div>
     <div class="side-bar">

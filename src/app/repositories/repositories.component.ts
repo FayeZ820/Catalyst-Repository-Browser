@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
-  Organisation
+  Organisation,
+  OrganisationResolved
 } from '../shared/entities/organisation';
 import { OrganisationService } from '../core/services/organisation.service';
 import { LoggerService } from '../core/services/logger.service';
@@ -18,20 +19,27 @@ export class RepositoriesComponent implements OnInit {
 
   constructor(
     private loggerService: LoggerService,
-    private organisationService$: OrganisationService,
+    // private organisationService$: OrganisationService,
     private router: Router,
+    private route: ActivatedRoute
   ) {
     this.loggerService.log('Accessing the organisation!');
   }
 
   ngOnInit(): void {
-    this.organisationService$.getOrganisationData().subscribe(
-       (data: Organisation) => {
-         this.organisation = data;
-       },
-       (err: HttpError) => console.log(err.friendlyMessage),
-       () => this.loggerService.log('All done getting Organisation Data!')
-     );
+    // this.organisationService$.getOrganisationData().subscribe(
+    //    (data: Organisation) => {
+    //      this.organisation = data;
+    //    },
+    //    (err: HttpError) => console.log(err.friendlyMessage),
+    //    () => this.loggerService.log('All done getting Organisation Data!')
+    //  );
+    const resolvedData: OrganisationResolved = this.route.snapshot.data[
+      'resolvedOrgaData'
+    ];
+    this.loggerService.log('Prefetch organisation data from Route Resolver!');
+    this.errorMessage = resolvedData.error;
+    this.organisation = resolvedData.organisation;
   }
 
   navToRepoGrid() {

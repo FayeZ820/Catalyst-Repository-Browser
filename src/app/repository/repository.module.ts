@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RepositoryDetailComponent } from './repository-detail/repository-detail.component';
+import { RepositoryRoutingModule } from './repository-routing.module';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [RepositoryDetailComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    RepositoryRoutingModule
   ]
 })
 export class RepositoryModule { }

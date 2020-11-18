@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { faCheck, faStar, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { GridItem } from '../../shared/entities/grid-item';
@@ -10,6 +10,9 @@ import {
   gridDisplayedColumns,
 } from '../../shared/entities/grid-displayed-columns';
 import { RepositoriesGridService } from '../../core/services/repositories-grid.service';
+import { compareFullName } from '../../shared/utilities/compareFullName';
+import { compareDate } from '../../shared/utilities/compareDate';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-repositories-grid',
@@ -28,14 +31,23 @@ export class RepositoriesGridComponent implements OnInit, AfterViewInit {
     showFalse: true,
   };
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  sortedDataSource: GridItem[];
 
-  constructor(repositoriesGridService: RepositoriesGridService) {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  constructor(
+    repositoriesGridService: RepositoriesGridService,
+    private router: Router
+  ) {
     repositoriesGridService.getList().subscribe((ls: GridItem[]) => {
       this.list = ls;
-      this.dataSource = new MatTableDataSource<GridItem>(ls);
+      this.dataSource = new MatTableDataSource<GridItem>(this.list);
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.sortedDataSource = this.list.slice();
+
+      console.log(this.sort, this.paginator);
     });
   }
 
@@ -44,6 +56,7 @@ export class RepositoriesGridComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    console.log(this.sort, this.paginator);
   }
 
   get displayedColumns(): unknown[] {
@@ -74,5 +87,34 @@ export class RepositoriesGridComponent implements OnInit, AfterViewInit {
       })
     );
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  sortData(sort: Sort): void {
+    console.log(':::', sort);
+    const data = this.list.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedDataSource = data;
+      return;
+    }
+
+    this.sortedDataSource = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'Name':
+          return compareFullName(a.full_name, b.full_name, isAsc);
+        case 'Created time':
+          return compareDate(a.created_at, b.created_at, isAsc);
+        case 'Updated time':
+          return compareDate(a.updated_at, b.updated_at, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  navigateToRepository(row) {
+    console.log(row);
+    this.router.navigate([`/repositories/${row.name}`]);
   }
 }

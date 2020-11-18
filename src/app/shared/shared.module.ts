@@ -5,6 +5,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
 import { MdePopoverModule } from '@material-extended/mde';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -18,6 +19,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatButtonModule,
     MatCheckboxModule,
     MdePopoverModule,
+    MatSortModule,
+
   ],
   exports: [
     FontAwesomeModule,
@@ -27,6 +30,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatButtonModule,
     MatCheckboxModule,
     MdePopoverModule,
+    MatSortModule,
+
   ],
 })
 export class SharedModule {}

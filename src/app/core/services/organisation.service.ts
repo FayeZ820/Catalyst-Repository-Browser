@@ -19,7 +19,7 @@ export class OrganisationService {
       .pipe(catchError(this.handleError));
   }
 
-  private handleError(err): void {
+  private handleError(err): Observable<never> {
     let errorMessage: string;
     if (err.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

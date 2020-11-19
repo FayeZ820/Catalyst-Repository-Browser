@@ -14,13 +14,29 @@
     margin: auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     overflow: hidden;
     color: #fff;
     .location {
-      width: 30px;
-      cursor: pointer;
+      width: 20px;
+      margin: 5px;
     }
+  }
+  .social-links img {
+    width: 30px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: block;
+  }
+
+  .social-links {
+    text-align: center;
+  }
+
+  .octicon{
+    width: 30px;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    fill: rgb(255, 255, 255);
   }
   
   .content {
@@ -48,36 +64,12 @@
     outline: none;
     cursor: pointer;
   }
-  .side-bar {
-    width: 50px;
-    height: 100vh;
-    background: linear-gradient(#041f22, #000729);
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  // .menu {
-  //   display: block;
-  //   width: 25px;
-  //   margin: 40px auto 0;
-  //   cursor: pointer;
-  // }
-  .social-links img {
-    width: 25px;
-    margin: 5px auto;
-    cursor: pointer;
-    display: block;
-  }
-  .social-links {
-    width: 50px;
-    text-align: center;
-    position: absolute;
-    bottom: 30px;
-  }
+  
   .bubbles img {
     width: 50px;
     animation: bubble 7s linear infinite;
   }
+
   .bubbles {
     width: 100%;
     display: flex;

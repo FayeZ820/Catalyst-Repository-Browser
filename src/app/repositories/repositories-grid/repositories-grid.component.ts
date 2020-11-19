@@ -41,7 +41,8 @@ export class RepositoriesGridComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute
   ) {
       const resolvedGridData: GridItem[] = this.route.snapshot.data[
-      "resolvedGridData"
+      // tslint:disable-next-line:no-string-literal
+      'resolvedGridData'
     ];
       this.list = resolvedGridData;
       this.dataSource = new MatTableDataSource<GridItem>(this.list);

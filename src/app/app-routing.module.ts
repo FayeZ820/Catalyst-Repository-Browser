@@ -8,7 +8,7 @@ import {
 
 import { PreloadModulesStrategy } from './core/strategies/preload-modules.strategy';
 
-const app_routes: Routes = [
+const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/repositories' },
   {
     path: 'repositories',
@@ -28,7 +28,7 @@ const app_routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(app_routes, {
+    RouterModule.forRoot(routes, {
       preloadingStrategy: PreloadModulesStrategy,
       relativeLinkResolution: 'legacy',
     }),

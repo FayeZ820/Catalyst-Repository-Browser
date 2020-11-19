@@ -35,6 +35,7 @@ export class RepositoriesComponent implements OnInit {
     //    () => this.loggerService.log('All done getting Organisation Data!')
     //  );
     const resolvedData: OrganisationResolved = this.route.snapshot.data[
+      // tslint:disable-next-line:no-string-literal
       'resolvedOrgaData'
     ];
     this.loggerService.log('Prefetch organisation data from Route Resolver!');
@@ -42,7 +43,7 @@ export class RepositoriesComponent implements OnInit {
     this.organisation = resolvedData.organisation;
   }
 
-  navToRepoGrid() {
+  navToRepoGrid(): void {
     this.router.navigate(['/repositories/repositories-grid']);
   }
 }

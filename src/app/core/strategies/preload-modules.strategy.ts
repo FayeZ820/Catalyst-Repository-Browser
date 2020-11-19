@@ -8,6 +8,7 @@ export class PreloadModulesStrategy implements PreloadingStrategy {
   constructor(private logger: LoggerService) {}
 
   preload(route: Route, load: () => Observable<any>): Observable<any> {
+    // tslint:disable-next-line:no-string-literal
     if (route.data && route.data['preload']) {
       this.logger.log('Preloaded: ' + route.path);
       return load();

@@ -45,7 +45,6 @@ export class RepositoryDetailComponent implements OnInit {
     this.state$.subscribe((s) => {
       this.item = s;
       this.contributors = s.contributor;
-      console.log('obje', s['contributor']);
     });
     this.contributions = this.contributors.map((x) => x.contributions);
     this.contributorNames = this.contributors.map((x) => x.login);

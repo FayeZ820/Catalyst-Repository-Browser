@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 export class LoggerService {
   constructor() {}
 
-  log(msg: string) {
+  log(msg: string): void {
     if (!environment.production) {
       console.log(msg);
     } else {
@@ -15,7 +15,7 @@ export class LoggerService {
     }
   }
 
-  logError(msg: string) {
+  logError(msg: string): void {
     if (!environment.production) {
       console.error(msg);
     } else {

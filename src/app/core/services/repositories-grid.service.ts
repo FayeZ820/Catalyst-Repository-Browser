@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+import { Contributor } from 'src/app/shared/entities/contributor';
 import { GridItem } from '../../shared/entities/grid-item';
 
 @Injectable({
@@ -10,7 +11,7 @@ import { GridItem } from '../../shared/entities/grid-item';
 export class RepositoriesGridService {
   constructor(private http: HttpClient) {}
 
-  getList() {
+  getList(): Observable<GridItem[]> {
     return this.http
       .get<GridItem[]>('https://api.github.com/orgs/catalyst/repos')
       .pipe(
@@ -31,8 +32,9 @@ export class RepositoriesGridService {
       );
   }
 
-  getContributors(repository_name: string) {
-    return this.http.get<Object[]>(
+  // tslint:disable-next-line:variable-name
+  getContributors(repository_name: string): Observable<Contributor[]> {
+    return this.http.get<Contributor[]>(
       `https://api.github.com/repos/catalyst/${repository_name}/contributors`
     );
   }

@@ -34,12 +34,12 @@ export class RepositoriesGridSiderComponent implements OnInit {
   //   return displayedColumns.indexOf(key) >= 0;
   // }
 
-  hanldeCheckBoxClick(name: string, selected: boolean) {
+  hanldeCheckBoxClick(name: string, selected: boolean): void {
     console.log(name, selected);
     this.changeDisplayColumns.emit({ name, selected });
   }
 
-  hanldeFilterCheckBox(name: string, value: boolean) {
+  hanldeFilterCheckBox(name: string, value: boolean): void {
     console.log(name, {
       ...this.filter,
       [name]: value,

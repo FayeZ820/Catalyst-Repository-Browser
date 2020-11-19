@@ -12,7 +12,7 @@ import {
 import { RepositoriesGridService } from '../../core/services/repositories-grid.service';
 import { compareFullName } from '../../shared/utilities/compareFullName';
 import { compareDate } from '../../shared/utilities/compareDate';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-repositories-grid',
@@ -36,16 +36,18 @@ export class RepositoriesGridComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    repositoriesGridService: RepositoriesGridService,
-    private router: Router
+    // repositoriesGridService: RepositoriesGridService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    repositoriesGridService.getList().subscribe((ls: GridItem[]) => {
-      this.list = ls;
+      const resolvedGridData: GridItem[] = this.route.snapshot.data[
+      "resolvedGridData"
+    ];
+      this.list = resolvedGridData;
       this.dataSource = new MatTableDataSource<GridItem>(this.list);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       console.log(this.sort, this.paginator);
-    });
   }
 
   ngOnInit(): void {}

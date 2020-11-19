@@ -31,7 +31,6 @@ export class RepositoriesGridComponent implements OnInit, AfterViewInit {
     showFalse: true,
   };
 
-  sortedDataSource: GridItem[];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -45,8 +44,6 @@ export class RepositoriesGridComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource<GridItem>(this.list);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.sortedDataSource = this.list.slice();
-
       console.log(this.sort, this.paginator);
     });
   }
@@ -75,17 +72,23 @@ export class RepositoriesGridComponent implements OnInit, AfterViewInit {
   changeFilter(evt: any): void {
     this.filter.showTrue = evt.showTrue;
     this.filter.showFalse = evt.showFalse;
-    this.dataSource = new MatTableDataSource<GridItem>(
-      this.list.filter((r) => {
-        if (this.filter.showTrue && r.fork) {
-          return true;
-        }
-        if (this.filter.showFalse && !r.fork) {
-          return true;
-        }
-        return false;
-      })
-    );
+    this.generateDataSource();
+  }
+
+  generateDataSource(fn?): void {
+    const data = this.list.filter((r) => {
+      if (this.filter.showTrue && r.fork) {
+        return true;
+      }
+      if (this.filter.showFalse && !r.fork) {
+        return true;
+      }
+      return false;
+    });
+    if (fn) {
+      fn(data);
+    }
+    this.dataSource = new MatTableDataSource<GridItem>(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -94,11 +97,12 @@ export class RepositoriesGridComponent implements OnInit, AfterViewInit {
     console.log(':::', sort);
     const data = this.list.slice();
     if (!sort.active || sort.direction === '') {
-      this.sortedDataSource = data;
+      this.list = data;
       return;
     }
 
-    this.sortedDataSource = data.sort((a, b) => {
+    this.generateDataSource((list) => {
+      return  list.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'Name':
@@ -110,11 +114,12 @@ export class RepositoriesGridComponent implements OnInit, AfterViewInit {
         default:
           return 0;
       }
+      });
     });
-  }
+}
 
-  navigateToRepository(row) {
+  navigateToRepository(row): void {
     console.log(row);
-    this.router.navigate([`/repositories/${row.name}`]);
+    this.router.navigate([`/repositories/${row.name}`], { state: row });
   }
 }

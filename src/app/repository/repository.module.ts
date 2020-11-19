@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RepositoryDetailComponent } from './repository-detail/repository-detail.component';
 import { RepositoryRoutingModule } from './repository-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -9,7 +10,8 @@ import { RepositoryRoutingModule } from './repository-routing.module';
   declarations: [RepositoryDetailComponent],
   imports: [
     CommonModule,
-    RepositoryRoutingModule
+    RepositoryRoutingModule,
+    SharedModule
   ]
 })
 export class RepositoryModule { }

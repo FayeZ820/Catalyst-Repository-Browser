@@ -8,6 +8,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSortModule } from '@angular/material/sort';
 import { MdePopoverModule } from '@material-extended/mde';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [],
@@ -20,7 +21,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatCheckboxModule,
     MdePopoverModule,
     MatSortModule,
-
+    NgApexchartsModule
   ],
   exports: [
     FontAwesomeModule,
@@ -31,7 +32,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatCheckboxModule,
     MdePopoverModule,
     MatSortModule,
-
+    NgApexchartsModule
   ],
 })
 export class SharedModule {}

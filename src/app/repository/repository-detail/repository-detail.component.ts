@@ -29,7 +29,7 @@ export type ChartOptions = {
 export class RepositoryDetailComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
-  state$: Observable<object>;
+  state$: Observable<any>;
   item: GridItem;
   contributors: Contributor[];
   contributions: number[];
@@ -43,25 +43,27 @@ export class RepositoryDetailComponent implements OnInit {
     );
 
     this.state$.subscribe((s) => {
-      this.contributors = s['contributor'];
+      this.item = s;
+      this.contributors = s.contributor;
       console.log('obje', s['contributor']);
     });
     this.contributions = this.contributors.map((x) => x.contributions);
     this.contributorNames = this.contributors.map((x) => x.login);
     console.log('contributors', this.contributors);
+    console.log('item', this.item);
     console.log('contributions', this.contributions);
     console.log('contributorNames', this.contributorNames);
 
     this.chartOptions = {
       series: [
         {
-          name: 'basic',
+          name: 'contributions',
           data: this.contributions,
         },
       ],
       chart: {
         type: 'bar',
-        height: 350,
+        height: 480,
       },
       plotOptions: {
         bar: {

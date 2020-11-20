@@ -10,7 +10,7 @@
   
   .navbar {
     width: 85%;
-    height: 15%;
+    height: 20%;
     margin: auto;
     display: flex;
     align-items: center;
@@ -40,9 +40,10 @@
   }
   
   .content {
+    width: 85%;
     color: #fbfcfb;
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 8%;
     transform: translateY(-50%);
     z-index: 2;

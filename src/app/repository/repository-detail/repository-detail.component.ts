@@ -35,6 +35,7 @@ export class RepositoryDetailComponent implements OnInit {
   contributions: number[];
   contributorNames: string[];
 
+
   constructor(public activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -62,7 +63,7 @@ export class RepositoryDetailComponent implements OnInit {
       ],
       chart: {
         type: 'bar',
-        height: 480,
+        height: 460,
       },
       plotOptions: {
         bar: {

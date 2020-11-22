@@ -13,6 +13,7 @@ import { RepositoriesGridService } from '../../core/services/repositories-grid.s
 import { compareFullName } from '../../shared/utilities/compareFullName';
 import { compareDate } from '../../shared/utilities/compareDate';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoggerService } from 'src/app/core/services/logger.service';
 
 @Component({
   selector: 'app-repositories-grid',
@@ -38,17 +39,19 @@ export class RepositoriesGridComponent implements OnInit, AfterViewInit {
   constructor(
     // repositoriesGridService: RepositoriesGridService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loggerService: LoggerService
   ) {
-      const resolvedGridData: GridItem[] = this.route.snapshot.data[
+    this.loggerService.log('Accessing The Repositories Grid Page!');
+    const resolvedGridData: GridItem[] = this.route.snapshot.data[
       // tslint:disable-next-line:no-string-literal
       'resolvedGridData'
     ];
-      this.list = resolvedGridData;
-      this.dataSource = new MatTableDataSource<GridItem>(this.list);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      console.log(this.sort, this.paginator);
+    this.list = resolvedGridData;
+    this.dataSource = new MatTableDataSource<GridItem>(this.list);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    console.log(this.sort, this.paginator);
   }
 
   ngOnInit(): void {}

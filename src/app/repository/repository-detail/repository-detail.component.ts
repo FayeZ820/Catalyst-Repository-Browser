@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { FocusMonitor } from '@angular/cdk/a11y';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   ApexAxisChartSeries,
@@ -10,6 +11,7 @@ import {
 } from 'ng-apexcharts';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { LoggerService } from 'src/app/core/services/logger.service';
 import { GridItem } from 'src/app/shared/entities/grid-item';
 import { Contributor } from '../../shared/entities/contributor';
 
@@ -26,7 +28,8 @@ export type ChartOptions = {
   templateUrl: './repository-detail.component.html',
   styleUrls: ['./repository-detail.component.scss']
 })
-export class RepositoryDetailComponent implements OnInit {
+export class RepositoryDetailComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('navBack') elementNavBack: ElementRef<HTMLElement>;
   @ViewChild('chart') chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   state$: Observable<any>;
@@ -36,7 +39,15 @@ export class RepositoryDetailComponent implements OnInit {
   contributorNames: string[];
 
 
-  constructor(public activatedRoute: ActivatedRoute) { }
+  constructor(
+    public activatedRoute: ActivatedRoute,
+    private loggerService: LoggerService,
+    private focusMonitor: FocusMonitor,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
+  ) {
+    this.loggerService.log('Accessing The Repository Detail Page!');
+   }
 
   ngOnInit(): void {
     this.state$ = this.activatedRoute.paramMap.pipe(
@@ -77,6 +88,18 @@ export class RepositoryDetailComponent implements OnInit {
         categories: this.contributorNames,
       },
     };
+  }
+
+  ngAfterViewInit(): void {
+    this.focusMonitor.monitor(this.elementNavBack).subscribe((origin) =>
+      this.ngZone.run(() => {
+        this.cdr.markForCheck();
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.focusMonitor.stopMonitoring(this.elementNavBack);
   }
 
 }
